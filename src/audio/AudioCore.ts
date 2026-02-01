@@ -120,10 +120,13 @@ export class AudioCore {
         }, 500);
     }
 
-    public setVolume(value: number): void {
-        // value 0.0 to 1.0
-        // Use exponential ramp for natural feel
-        // Avoid 0 exactly for exponential ramp errors, use 0.0001 or just linear if simple
-        this.master.gain.rampTo(value, 0.1);
+    public setAdaptive(enabled: boolean): void {
+        this.adaptiveEnabled = enabled;
+        if (!enabled) {
+            // Reset EQ to flat
+            this.eq.low.rampTo(0, 1);
+            this.eq.mid.rampTo(0, 1);
+            this.eq.high.rampTo(0, 1);
+        }
     }
 }
