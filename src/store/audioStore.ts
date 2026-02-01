@@ -6,6 +6,7 @@ interface AudioState {
     volume: number;
     noiseType: NoiseType;
     isMicActive: boolean;
+    isAdaptive: boolean;
 
     // Actions
     togglePlay: () => Promise<void>;
@@ -52,7 +53,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     setAdaptive: (enabled) => {
         const core = AudioCore.getInstance();
         core.setAdaptive(enabled);
-        set({ isAdaptive: enabled }); // Note: Add isAdaptive property to interface if missing
+        set({ isAdaptive: enabled });
     },
 
     toggleMic: async () => {
